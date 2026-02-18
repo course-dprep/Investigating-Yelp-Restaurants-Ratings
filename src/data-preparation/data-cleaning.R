@@ -20,6 +20,4 @@ dataset_restaurants <- dataset_restaurants %>%
     )
   )
 
-
-
 dataset_restaurants <- dataset_restaurants %>% filter(!is.na(price_range))
