@@ -3,3 +3,39 @@ title: "analysis"
 output: html_document
 ---
 
+**Set up chuck**
+```{r}
+
+library(ggplot2)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+**Exploring star rating**
+
+```{r}
+#Summary statistics
+summary(dataset_restaurants$stars)
+
+#Mean and SD
+m_stars <- mean(dataset_restaurants$stars, na.rm = TRUE)
+sd_stars <- sd(dataset_restaurants$stars, na.rm=TRUE)
+
+m_stars
+sd_stars
+
+#Histogram
+ggplot(dataset_restaurants, aes(x = stars)) +
+  geom_histogram(binwidth = 0.5,
+                 fill = "#A6CEE3",
+                 color = "white") +
+  labs(
+    title = "Distribution of Restaurant Star Ratings",
+    x = "Star Rating",
+    y = "Number of Restaurants"
+  ) +
+  theme_minimal()
+```
+
+The figure shows the distribution of restaurant star ratings. Ratings range from 1 to 5 stars, with most restaurants clustered around ratings between approximately 3 and 4.5 stars. The distribution is slightly left-skewed, indicating that relatively few restaurants receive very low ratings.
+
+The average rating in the data set is 3.46 (SD = 0.81), suggesting that overall customer evaluations are generally positive. Since star rating is the dependent variable in our analysis, understanding its distribution provides important context for interpreting the effect of delivery options, dine-experience and price range in later sections.
