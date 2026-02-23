@@ -3,3 +3,9 @@ title: "analysis"
 output: html_document
 ---
 
+**Set up chuck**
+```{r}
+
+library(ggplot2)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
