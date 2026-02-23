@@ -112,3 +112,34 @@ However, the effect size is small. A one-point increase in delivery score is ass
 
 Furthermore, delivery score explains less than 1% of the variance in star ratings, indicating that tis pratcial importance is limited.
 
+
+**Testing Moderation effect with delivery_score**
+```{r}
+#Moderation effect
+model_moderation <- lm(stars ~ delivery_score * price_range, 
+                       data = dataset_restaurants)
+#Summary of moderation
+summary(model_moderation)
+```
+
+A regression model including an interaction between delivery score and price range reveals a positive and statistically significant interaction effect (B = 0,168, p < 001). This indicates that price range moderates the relationship between delivery services and star ratings. 
+
+Specifically, the negative association between delivery score and ratings becomes weaker as price range increases and eventually returns positive for higher-priced restaurants. For lower-priced establishments, offering more delivery-related services is associated with slightly lower ratings. In contrast, for higher-priced restaurants, delivery services are associated with higher ratings. 
+
+The inclusion of the interaction improves model fit (R^2 = 0.047), compared to the model without moderation (R^2 = 0.005). This suggests that price range plays a meaningful moderating role in explaining variation in restaurant ratings
+
+```{r}
+#Data plot for delivery_score
+ggplot(dataset_restaurants,
+       aes(x = delivery_score,
+           y = stars,
+           color = factor(price_range))) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_y_continuous(limits = c(1,5)) +
+  theme_minimal()
+```
+
+This figure displays the moderating role of price range on the relationship between delivery score and star ratings. For lower-priced restaurants, an increase in delivery-related services is associated with lower customer ratings, as indicated by the negative slope. As price range increases, this relationship weakens and gradually becomes positive. 
+
+For higher-priced restaurants, delivery services are associated with higher ratings, consistent with the positive interaction effect osberved in the regression analysis. Although the slope of the highest price category appears relatively flat visually, the regression results confirm a statistically significant positive interaction effect, indicating that the association between delivery services and ratings becomes more favorable at higher price levels. 
+
