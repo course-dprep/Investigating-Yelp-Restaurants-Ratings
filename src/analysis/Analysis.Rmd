@@ -143,3 +143,35 @@ This figure displays the moderating role of price range on the relationship betw
 
 For higher-priced restaurants, delivery services are associated with higher ratings, consistent with the positive interaction effect osberved in the regression analysis. Although the slope of the highest price category appears relatively flat visually, the regression results confirm a statistically significant positive interaction effect, indicating that the association between delivery services and ratings becomes more favorable at higher price levels. 
 
+**Dine_in_score**
+
+```{r}
+#summary statistics
+summary(dataset_restaurants$dinein_score)
+
+#Dataplot for dine_in_score        
+ggplot(dataset_restaurants, aes(x = dinein_score, y = stars)) +
+  geom_smooth(method = "lm", color = "black") +
+  scale_y_continuous(limits = c(1,5)) +
+  labs(
+    title = "Dine-in Score and Star Ratings",
+    x = "Dine-in Score",
+    y = "Star Rating"
+  ) +
+  theme_minimal()   
+
+```
+
+This figure shows the relationship between dine-in score and star ratings. The fitted regression line indicates a positive association, suggesting that restaurants offering more dine-in related services tend to receive higher customer ratings. The slope appears steeper than that observed for delivery score, indicating that dine-in experience may have a stronger relationship with customer evaluations in this dataset.
+
+```{r}
+#Dine_in_score summary
+model_dinein <- lm(stars ~ dinein_score,
+                   data = dataset_restaurants)
+summary(model_dinein)
+```
+A simple linear regression shows a statistically significant positive relationship between dine-in score and star rating (P <.001). This indicates that restaurants offering  more dine-in related services tend to receive higher customer ratings.
+
+The effect size is meaningful: across the observed range of the dine-in-score, the predicted difference in ratings is approximately 0.58 stars.
+
+The model explains about 2.9% of the variance in star ratings, indicating that dine-in experience is a stronger predictor of ratings than delivery options in this dataset.
