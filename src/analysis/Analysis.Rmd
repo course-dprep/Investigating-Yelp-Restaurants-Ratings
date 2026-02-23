@@ -39,3 +39,28 @@ ggplot(dataset_restaurants, aes(x = stars)) +
 The figure shows the distribution of restaurant star ratings. Ratings range from 1 to 5 stars, with most restaurants clustered around ratings between approximately 3 and 4.5 stars. The distribution is slightly left-skewed, indicating that relatively few restaurants receive very low ratings.
 
 The average rating in the data set is 3.46 (SD = 0.81), suggesting that overall customer evaluations are generally positive. Since star rating is the dependent variable in our analysis, understanding its distribution provides important context for interpreting the effect of delivery options, dine-experience and price range in later sections.
+
+**Exploring price range**
+
+```{r}
+#Summary statistics 
+
+summary(dataset_restaurants$price_range)
+
+#Histogram
+
+ggplot(dataset_restaurants, aes(x = factor(price_range))) +
+  geom_bar(fill = "#A6CEE3") +
+  labs(
+    title = "Distribution of Restaurant Price Range",
+    x = "Price Range",
+    y = "Number of Restaurants"
+  ) +
+  theme_minimal()
+
+```
+
+
+The figure shows the distribution of restaurants across the four price categories. The majority of restaurants fall within the lower price segments (price levels 1 and 2), with price level 2 being the most common category. In contrast, relatively fewer restaurants are classified as higher-priced establishments (levels 3 and 4), with 4 only representing a very small proportion of the sample. 
+
+This indicates that the data set is skewed toward lower priced restaurants. Since price range serves as a moderating variable in the analysis, the distribution should be considered when interpreting interaction effects in later sections
