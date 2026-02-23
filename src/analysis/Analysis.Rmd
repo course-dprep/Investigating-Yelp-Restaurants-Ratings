@@ -64,3 +64,51 @@ ggplot(dataset_restaurants, aes(x = factor(price_range))) +
 The figure shows the distribution of restaurants across the four price categories. The majority of restaurants fall within the lower price segments (price levels 1 and 2), with price level 2 being the most common category. In contrast, relatively fewer restaurants are classified as higher-priced establishments (levels 3 and 4), with 4 only representing a very small proportion of the sample. 
 
 This indicates that the data set is skewed toward lower priced restaurants. Since price range serves as a moderating variable in the analysis, the distribution should be considered when interpreting interaction effects in later sections
+
+**Cluster score**
+```{r}
+#Summary Statistics
+summary(dataset_restaurants$delivery_score)
+summary(dataset_restaurants$dinein_score)
+
+```
+
+```{r}
+#Distribution of the cluster score
+ggplot(dataset_restaurants, aes(x = delivery_score)) +
+  geom_histogram(binwidth = 1, fill = "#A6CEE3", color = "white") +
+  labs(title="Distribution of Delivery Score", x="Delivery Score", y="Number of Restaurants") +
+  theme_minimal()
+
+ggplot(dataset_restaurants, aes(x = dinein_score)) +
+  geom_histogram(binwidth = 1, fill = "#A6CEE3", color = "white") +
+  labs(title="Distribution of Dine-in Score", x="Dine-in Score", y="Number of Restaurants") +
+  theme_minimal()
+
+#Scatterplot for Delivery_score
+ggplot(dataset_restaurants, aes(x = delivery_score, y = stars)) +
+  geom_smooth(method = "lm", color = "black") +
+  labs(
+    title = "Delivery Score and Star Ratings",
+    x = "Delivery Score",
+    y = "Star Rating"
+  ) +
+  scale_y_continuous(limits = c(1,5)) +
+  theme_minimal()
+```
+
+```{r}
+#Delivery score
+  model_delivery <- lm(stars ~ delivery_score, data = dataset_restaurants)
+#Summary of the delivery score
+summary(model_delivery)
+```
+
+The delivery and dine-in scores take discrete values, as they are constructed from multiple binary service indicates. The majority of restaurants fall within the lower-to-middle range of both scores, indicating that only a subset of establishments offers many delivery or dine-in related services. 
+
+A simple linear regression analysis shows a statistically significant negative relationship between delivery score and star rating. Restaurants offering more delivery-related services tend to receive slightly lower ratings.
+
+However, the effect size is small. A one-point increase in delivery score is associated with a decrease of only 0.063 stars. Even across the full delivery scale, the maximum predicted difference in rating is approximately 0.25 stars.
+
+Furthermore, delivery score explains less than 1% of the variance in star ratings, indicating that tis pratcial importance is limited.
+
