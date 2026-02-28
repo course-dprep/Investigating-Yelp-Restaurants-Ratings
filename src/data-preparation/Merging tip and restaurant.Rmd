@@ -1,0 +1,79 @@
+---
+title: "Merging tip and restaurant"
+output: html_document
+---
+
+Merging Tip complement counts with cleaned restaurant dataset
+
+**Load required package**
+
+```{r}
+library(data.table)
+```
+
+
+Ensure data set_restaurant is treated as a data.table
+```{r}
+setDT(dataset_restaurants)
+```
+
+Read the yelp tip data set, this data set contain compliment_count per tip 
+```{r}
+setwd("C:/Users/Esmeralda/Documents/Investigating-Yelp-Restaurants-Ratings")
+tips <- fread("../../data/yelp_academic_dataset_tip.csv")
+```
+
+**Prepare merge key**
+
+Ensuring business_id has the same data type in both data sets
+
+```{r}
+dataset_restaurants[, business_id := as.character(business_id)]
+tips[, business_id := as.character(business_id)]
+```
+
+**Aggregate compliment counts at restaurant level** 
+
+sum compliment_count for each business_id (because a restaurant can appear multiple times in the tips data set)
+
+```{r}
+tips_agg <- tips[, .(
+  tip_compliment_count = sum(compliment_count, na.rm = TRUE)
+), by = business_id]
+```
+
+**Merge compliment counts into restaurant dataset**
+
+Perform a left join: keep all restaurants from dataset_restaurants and add tip_compliment_count when available
+
+```{r}
+restaurants_merged <- merge(
+  dataset_restaurants,
+  tips_agg,
+  by = "business_id",
+  all.x = TRUE
+)
+```
+
+Replace NA values (restuarant without tips) with 0 
+```{r}
+restaurants_merged[is.na(tip_compliment_count), tip_compliment_count := 0]
+```
+
+**Validation checks**
+Check if no restaurants were lost during merge (should be the same)
+```{r}
+nrow(dataset_restaurants)
+nrow(restaurants_merged)
+```
+
+Summary statistics of compliment counts
+```{r}
+summary(restaurants_merged$tip_compliment_count)
+```
+
+Count how many restaurants received at least one compliment
+```{r}
+sum(restaurants_merged$tip_compliment_count > 0)
+```
+
