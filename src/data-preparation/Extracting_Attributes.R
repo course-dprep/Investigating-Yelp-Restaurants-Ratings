@@ -1,5 +1,8 @@
 library(tidyverse)
 
+#input
+dataset_restaurants <- read_csv("data/restaurants_clean.csv")
+
 #Extract Tru/false attributes
 dataset_restaurants <- dataset_restaurants %>%
   mutate(
@@ -67,3 +70,5 @@ dataset_restaurants <- dataset_restaurants %>%
                                            "RestaurantsTableService"))), na.rm = TRUE)
   )
 
+#output
+write_csv(dataset_restaurants, "data/restaurants_attributes_extracted.csv")

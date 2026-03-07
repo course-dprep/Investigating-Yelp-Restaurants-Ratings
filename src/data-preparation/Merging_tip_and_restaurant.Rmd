@@ -9,11 +9,15 @@ Merging Tip complement counts with cleaned restaurant dataset
 
 ```{r}
 library(data.table)
+library(tidyverse)
+library(here)
 ```
 
 Ensure data set_restaurant is treated as a data.table
 
 ```{r}
+dataset_restaurants <- read_csv(here("data", "restaurants_attributes_extracted.csv"))
+tips <- read_csv(here("data", "tips.csv"))
 setDT(dataset_restaurants)
 setDT(tips) 
 ```

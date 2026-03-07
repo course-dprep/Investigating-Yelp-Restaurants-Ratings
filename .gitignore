@@ -1,3 +1,11 @@
 # Use this file to keep certain files from being versioned (covered in the GitHub part of the course).
 
 .DS_Store
+.Rhistory
+.RData
+users.csv
+tips.csv
+restaurants_clean.csv
+restaurants_attributes_extracted.csv
+Analysis.html
+Merging_tip_and_restaurant.html
