@@ -42,9 +42,12 @@ The most effective method for our investigation is multiple linear regression si
 
 ## Preview of Findings
 
--   Describe the gist of your findings (save the details for the final paper!)
-A reproducible report created in RMarkdown and converted to PDF will be our primary output. Reporting will be used to generate the report.Rmd and added to the GitHub repository to enable end-to-end reproducibility of the analysis.
--   Explain the relevance of these findings/product.
+This project is expected to provide insights into how delivery-related options and dine-in experience are associated with Yelp restaurants ratings, and whether these relationships differ across price levels. More specifically, the analysis examines whether attributes such as delivery, takeout, reservations, outdoor seating, table service and other restaurant features are systematically related to star ratings. The final product of the project will be a reproducible analytical report created in RMarkdown and exported to PDF, with the full workflow integrated into the GitHub repository. This allows the analysis to be reproduced from data preparation to the final reporting stage.
+
+Relevance of these findings
+
+The findings of the project are relevant because they contribute to a better understanding of which restaurant characteristics are linked to customer evaluations on Yelp. Such insights may be useful for interpreting patterns in online ratings and for identifying service features that appear to matter more strongly across different price segments. In addition, the project’s reproducible workflow is itself an important outcome, as it supports transparency, replicability, and future collaboration by allowing others to trace, verify and rerun the complete analysis. 
+
 
 ## Repository Overview
 
