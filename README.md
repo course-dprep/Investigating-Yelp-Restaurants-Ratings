@@ -1,8 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/-5U7Jn2O) \> **Important:** This is a template repository to help you set up your team project.\
-\>\
-\> You are free to modify it based on your needs. For example, if your data is downloaded using *multiple* scripts instead of a single one (as shown in `\data\`), structure the code accordingly. The same applies to all other starter files—adapt or remove them as needed.\
-\>\
-
 # Impact of 'delivery options' and 'dine-in options' on Yelp restaurant ratings
 
 This research employs an automated front-end process to acquire insights into the effects of 'delivery options' and 'dine-in options' on Yelp restaurant evaluations, which are regulated by price level. Using multilinear regression, this study seeks to find relationships between specific restaurant features and clusters of variables on overall rating. This way, we hope to gain insight into what traits are most important to these businesses.
@@ -27,8 +22,8 @@ Dine in experience –\> RestaurantsReservations, RestaurantsGoodForGroups, Alco
 
 ## Data
 
--   What dataset(s) did you use? How was it obtained?
--   How many observations are there in the final dataset?
+-   What dataset(s) did you use? How was it obtained? This project uses two datasets that are downloaded through Google Drive. The datasets are part of a bigger collection of data produced by Yelp in 2025. All the datasets can be found on <https://drive.google.com/drive/folders/1WHSh8ZQYzQ3IQI8tJX90cYGR4bDy13v3>. The two datasets used for this project specifically are called yelp_academic_dataset_user.csv & yelp_academic_dataset_tip.csv. All data in this project will load programmatically by just running the project and should not require any manual input.
+-   How many observations are there in the final dataset? After
 -   Include a table of variable description/operstionalisation.
 
 ## Method
@@ -39,20 +34,77 @@ The most effective method for our investigation is multiple linear regression si
 
 ## Preview of Findings
 
--   Describe the gist of your findings (save the details for the final paper!) A reproducible report created in RMarkdown and converted to PDF will be our primary output. Reporting will be used to generate the report.Rmd and added to the GitHub repository to enable end-to-end reproducibility of the analysis.
--   Explain the relevance of these findings/product.
+This project is expected to provide insights into how delivery-related options and dine-in experience are associated with Yelp restaurants ratings, and whether these relationships differ across price levels. More specifically, the analysis examines whether attributes such as delivery, takeout, reservations, outdoor seating, table service and other restaurant features are systematically related to star ratings. The final product of the project will be a reproducible analytical report created in RMarkdown and exported to PDF, with the full workflow integrated into the GitHub repository. This allows the analysis to be reproduced from data preparation to the final reporting stage.
+
+Relevance of these findings
+
+The findings of the project are relevant because they contribute to a better understanding of which restaurant characteristics are linked to customer evaluations on Yelp. Such insights may be useful for interpreting patterns in online ratings and for identifying service features that appear to matter more strongly across different price segments. In addition, the project’s reproducible workflow is itself an important outcome, as it supports transparency, replicability, and future collaboration by allowing others to trace, verify and rerun the complete analysis.
+
 
 ## Repository Overview
 
-\*\*Include a tree diagram that illustrates the repository structure\*
+```         
+Investigating-Yelp-Restaurants-Ratings
+│
+├── data/
+│     ├── download-data.R
+├── src/
+│ ├── data-preparation/
+│ │ ├── data-cleaning.R
+│ │ ├── Extracting_Attributes.R
+│ │ └── Merging_tip_and_restaurant.Rmd
+│ │
+│ └── analysis/
+│     └── Analysis.Rmd
+│
+├── reporting/
+│
+├── Makefile
+├── README.md
+└── .gitignore
+```
 
 ## Dependencies
 
-*Explain any tools or packages that need to be installed to run this workflow.*
+This project requires the following software:
+
+-   R (version 4.0 or higher)
+-   GNU Make
+-   Pandoc (included with RStudio)
+
+Required R packages:
+
+-   tidyverse
+-   dplyr
+-   stringr
+-   readr
+-   ggplot2
+-   data.table
+-   googledrive
+-   here
 
 ## Running Instructions
 
-*Provide step-by-step instructions that have to be followed to run this workflow.*
+1.  Open a terminal in the project directory.
+
+2.  Clone the repository:
+
+```         
+git clone https://github.com/course-dprep/Investigating-Yelp-Restaurants-Ratings.git
+cd Investigating-Yelp-Restaurants-Ratings
+```
+
+3.  Run the pipeline:
+
+```         
+make
+```
+
+This command will automatically: - download the raw datasets - clean and prepare the data - merge the datasets - generate the final analysis reports
+
+4.  View the results
+
+The generated reports can be found in the reporting/ directory: - reporting/Merging_tip_and_restaurant.html - reporting/Analysis.html
 
 ## About
 
