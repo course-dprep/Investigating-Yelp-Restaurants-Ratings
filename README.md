@@ -50,29 +50,27 @@ The findings of the project are relevant because they contribute to a better und
 
 
 ## Repository Overview
-
-\*\*Include a tree diagram that illustrates the repository structure\*
-
-## Dependencies
-
+```
 Investigating-Yelp-Restaurants-Ratings
-├── data/
-│   └── data-cleaning.R
 │
+├── data/
+│     ├── download-data.R
 ├── src/
-│   ├── download-data.R
-│   │
-│   ├── data-preparation/
-│   │   ├── Extracting_Attributes.R
-│   │   └── Merging_tip_and_restaurant.Rmd
-│   │
-│   └── analysis/
-│       └── Analysis.Rmd
+│ ├── data-preparation/
+│ │ ├── data-cleaning.R
+│ │ ├── Extracting_Attributes.R
+│ │ └── Merging_tip_and_restaurant.Rmd
+│ │
+│ └── analysis/
+│     └── Analysis.Rmd
 │
 ├── reporting/
-├── .gitignore
+│
 ├── Makefile
-└── README.md
+├── README.md
+└── .gitignore
+```
+## Dependencies
 
 This project requires the following software:
 
@@ -96,19 +94,21 @@ Required R packages:
 1. Open a terminal in the project directory.
    
 2. Clone the repository:
-   git clone https://github.com/course-dprep/Investigating-Yelp-Restaurants-Ratings.git
-   cd Investigating-Yelp-Restaurants-Ratings
-
+```
+git clone https://github.com/course-dprep/Investigating-Yelp-Restaurants-Ratings.git
+cd Investigating-Yelp-Restaurants-Ratings
+```
 3. Run the pipeline:
-   make
-   
+```
+make
+```
    This command will automatically:
-   - download the raw datasets
-   - clean and prepare the data
-   - merge the datasets
-   - generate the final analysis reports
+    - download the raw datasets
+    - clean and prepare the data
+    - merge the datasets
+    - generate the final analysis reports
 
-5. View the results
+4. View the results
 
 The generated reports can be found in the reporting/ directory:
 - reporting/Merging_tip_and_restaurant.html
