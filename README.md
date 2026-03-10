@@ -1,8 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/-5U7Jn2O) \> **Important:** This is a template repository to help you set up your team project.\
-\>\
-\> You are free to modify it based on your needs. For example, if your data is downloaded using *multiple* scripts instead of a single one (as shown in `\data\`), structure the code accordingly. The same applies to all other starter files—adapt or remove them as needed.\
-\>\
-
 # Impact of 'delivery options' and 'dine-in options' on Yelp restaurant ratings
 
 This research employs an automated front-end process to acquire insights into the effects of 'delivery options' and 'dine-in options' on Yelp restaurant evaluations, which are regulated by price level. Using multilinear regression, this study seeks to find relationships between specific restaurant features and clusters of variables on overall rating. This way, we hope to gain insight into what traits are most important to these businesses.
@@ -26,12 +21,26 @@ Delivery/takeout –\> RestaurantsDelivery, RestaurantsTakeOut, Caters, DriveThr
 Dine in experience –\> RestaurantsReservations, RestaurantsGoodForGroups, Alcohol, HappyHour, OutdoorSeating, GoodForKids, RestaurantTableService
 
 ## Data
-
--   What dataset(s) did you use? How was it obtained?
 This project uses two datasets that are downloaded through Google Drive. The datasets are part of a bigger collection of data produced by Yelp in 2025. All the datasets can be found on https://drive.google.com/drive/folders/1WHSh8ZQYzQ3IQI8tJX90cYGR4bDy13v3. The two datasets used for this project specifically are called yelp_academic_dataset_user.csv & yelp_academic_dataset_tip.csv. All data in this project will load programmatically by just running the project and should not require any manual input.
--   How many observations are there in the final dataset?
-After 
--   Include a table of variable description/operstionalisation.
+After running make the final dataset "restaurants_attributes_extracted.csv" will be in the data folder, this dataset contains 44484 observations. 
+
+Below is a table of all of the important variables used in the project that are part of the final dataset, including their operationalisation and role in the project.
+| Variable                 | Description                                   | Operationalisation                                         | Role               |
+| ------------------------ | --------------------------------------------- | ---------------------------------------------------------- | ------------------ |
+| stars                    | Average Yelp rating of the restaurant         | Numeric value from 1–5 based on Yelp reviews               | Dependent variable |
+| RestaurantsDelivery      | Whether the restaurant offers delivery        | Binary variable (1 = delivery available, 0 = no delivery)  | Delivery cluster   |
+| RestaurantsTakeOut       | Whether takeout is available                  | Binary variable (1 = takeout available, 0 = not available) | Delivery cluster   |
+| Caters                   | Whether catering services are offered         | Binary variable (1 = yes, 0 = no)                          | Delivery cluster   |
+| DriveThru                | Presence of drive-through service             | Binary variable (1 = yes, 0 = no)                          | Delivery cluster   |
+| RestaurantsReservations  | Whether reservations are accepted             | Binary variable (1 = yes, 0 = no)                          | Dine-in cluster    |
+| RestaurantsGoodForGroups | Whether the restaurant is suitable for groups | Binary variable (1 = yes, 0 = no)                          | Dine-in cluster    |
+| Alcohol                  | Whether alcohol is served                     | Categorical variable indicating alcohol availability       | Dine-in cluster    |
+| HappyHour                | Whether the restaurant offers happy hour      | Binary variable (1 = yes, 0 = no)                          | Dine-in cluster    |
+| OutdoorSeating           | Whether outdoor seating is available          | Binary variable (1 = yes, 0 = no)                          | Dine-in cluster    |
+| GoodForKids              | Whether the restaurant is suitable for kids   | Binary variable (1 = yes, 0 = no)                          | Dine-in cluster    |
+| RestaurantTableService   | Whether table service is offered              | Binary variable (1 = yes, 0 = no)                          | Dine-in cluster    |
+| price_range              | Restaurant price category                     | Ordinal scale representing price levels (1 $ <–> 4 $$$$)   | Moderator          |
+
 
 ## Method
 
