@@ -55,11 +55,64 @@ The findings of the project are relevant because they contribute to a better und
 
 ## Dependencies
 
-*Explain any tools or packages that need to be installed to run this workflow.*
+Investigating-Yelp-Restaurants-Ratings
+├── data/
+│   └── data-cleaning.R
+│
+├── src/
+│   ├── download-data.R
+│   │
+│   ├── data-preparation/
+│   │   ├── Extracting_Attributes.R
+│   │   └── Merging_tip_and_restaurant.Rmd
+│   │
+│   └── analysis/
+│       └── Analysis.Rmd
+│
+├── reporting/
+├── .gitignore
+├── Makefile
+└── README.md
+
+This project requires the following software:
+
+- R (version 4.0 or higher)
+- GNU Make
+- Pandoc (included with RStudio)
+
+Required R packages:
+
+- tidyverse
+- dplyr
+- stringr
+- readr
+- ggplot2
+- data.table
+- googledrive
+- here
 
 ## Running Instructions
 
-*Provide step-by-step instructions that have to be followed to run this workflow.*
+1. Open a terminal in the project directory.
+   
+2. Clone the repository:
+   git clone https://github.com/course-dprep/Investigating-Yelp-Restaurants-Ratings.git
+   cd Investigating-Yelp-Restaurants-Ratings
+
+3. Run the pipeline:
+   make
+   
+   This command will automatically:
+   - download the raw datasets
+   - clean and prepare the data
+   - merge the datasets
+   - generate the final analysis reports
+
+5. View the results
+
+The generated reports can be found in the reporting/ directory:
+- reporting/Merging_tip_and_restaurant.html
+- reporting/Analysis.html
 
 ## About
 
