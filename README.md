@@ -28,7 +28,9 @@ Dine in experience –\> RestaurantsReservations, RestaurantsGoodForGroups, Alco
 ## Data
 
 -   What dataset(s) did you use? How was it obtained?
+This project uses two datasets that are downloaded through Google Drive. The datasets are part of a bigger collection of data produced by Yelp in 2025. All the datasets can be found on https://drive.google.com/drive/folders/1WHSh8ZQYzQ3IQI8tJX90cYGR4bDy13v3. The two datasets used for this project specifically are called yelp_academic_dataset_user.csv & yelp_academic_dataset_tip.csv. All data in this project will load programmatically by just running the project and should not require any manual input.
 -   How many observations are there in the final dataset?
+After 
 -   Include a table of variable description/operstionalisation.
 
 ## Method
