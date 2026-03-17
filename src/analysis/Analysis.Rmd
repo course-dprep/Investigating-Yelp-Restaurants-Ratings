@@ -5,17 +5,18 @@ output: html_document
 
 **Set up chuck**
 ```{r}
-
 library(ggplot2)
-library(tidyverse)
 library(here)
+library(readr)
+library(stargazer)
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+dir.create(here("gen", "output"), recursive = TRUE, showWarnings = FALSE)
 ```
 **import data**
 ```{r}
-
 dataset_restaurants <- read_csv(here("data", "restaurants_attributes_extracted.csv"))
 ```
+
 **Exploring star rating**
 
 ```{r}
@@ -30,16 +31,23 @@ m_stars
 sd_stars
 
 #Histogram
-ggplot(dataset_restaurants, aes(x = stars)) +
-  geom_histogram(binwidth = 0.5,
-                 fill = "#A6CEE3",
-                 color = "white") +
+plot_stars <- ggplot(dataset_restaurants, aes(x = stars)) +
+  geom_histogram(binwidth = 0.5, fill = "#A6CEE3", color = "white") +
   labs(
     title = "Distribution of Restaurant Star Ratings",
     x = "Star Rating",
     y = "Number of Restaurants"
   ) +
   theme_minimal()
+
+plot_stars
+
+ggsave(
+  filename = here("gen", "output", "plot_stars.png"),
+  plot = plot_stars,
+  width = 7,
+  height = 5
+)
 ```
 
 The figure shows the distribution of restaurant star ratings. Ratings range from 1 to 5 stars, with most restaurants clustered around ratings between approximately 3 and 4.5 stars. The distribution is slightly left-skewed, indicating that relatively few restaurants receive very low ratings.
@@ -55,7 +63,7 @@ summary(dataset_restaurants$price_range)
 
 #Histogram
 
-ggplot(dataset_restaurants, aes(x = factor(price_range))) +
+plot_price <- ggplot(dataset_restaurants, aes(x = factor(price_range))) +
   geom_bar(fill = "#A6CEE3") +
   labs(
     title = "Distribution of Restaurant Price Range",
@@ -64,6 +72,14 @@ ggplot(dataset_restaurants, aes(x = factor(price_range))) +
   ) +
   theme_minimal()
 
+plot_price
+
+ggsave(
+  filename = here("gen", "output", "plot_price_range.png"),
+  plot = plot_price,
+  width = 7,
+  height = 5
+)
 ```
 
 
@@ -81,26 +97,61 @@ summary(dataset_restaurants$dinein_score)
 
 ```{r}
 #Distribution of the cluster score
-ggplot(dataset_restaurants, aes(x = delivery_score)) +
+plot_delivery_hist <- ggplot(dataset_restaurants, aes(x = delivery_score)) +
   geom_histogram(binwidth = 1, fill = "#A6CEE3", color = "white") +
-  labs(title="Distribution of Delivery Score", x="Delivery Score", y="Number of Restaurants") +
+  labs(
+    title = "Distribution of Delivery Score",
+    x = "Delivery Score",
+    y = "Number of Restaurants"
+  ) +
   theme_minimal()
 
-ggplot(dataset_restaurants, aes(x = dinein_score)) +
+plot_delivery_hist
+
+ggsave(
+  filename = here("gen", "output", "plot_delivery_hist.png"),
+  plot = plot_delivery_hist,
+  width = 7,
+  height = 5
+)
+
+plot_dinein_hist <- ggplot(dataset_restaurants, aes(x = dinein_score)) +
   geom_histogram(binwidth = 1, fill = "#A6CEE3", color = "white") +
-  labs(title="Distribution of Dine-in Score", x="Dine-in Score", y="Number of Restaurants") +
+  labs(
+    title = "Distribution of Dine-in Score",
+    x = "Dine-in Score",
+    y = "Number of Restaurants"
+  ) +
   theme_minimal()
 
+plot_dinein_hist
+
+ggsave(
+  filename = here("gen", "output", "plot_dinein_hist.png"),
+  plot = plot_dinein_hist,
+  width = 7,
+  height = 5
+)
 #Scatterplot for Delivery_score
-ggplot(dataset_restaurants, aes(x = delivery_score, y = stars)) +
+plot_delivery_stars <- ggplot(dataset_restaurants, aes(x = delivery_score, y = stars)) +
+  geom_point(alpha = 0.2) +
   geom_smooth(method = "lm", color = "black") +
   labs(
     title = "Delivery Score and Star Ratings",
     x = "Delivery Score",
     y = "Star Rating"
   ) +
-  scale_y_continuous(limits = c(1,5)) +
+  scale_y_continuous(limits = c(1, 5)) +
   theme_minimal()
+
+plot_delivery_stars
+
+ggsave(
+  filename = here("gen", "output", "plot_delivery_stars.png"),
+  plot = plot_delivery_stars,
+  width = 7,
+  height = 5
+)
 ```
 
 ```{r}
@@ -136,13 +187,28 @@ The inclusion of the interaction improves model fit (R^2 = 0.047), compared to t
 
 ```{r}
 #Data plot for delivery_score
-ggplot(dataset_restaurants,
-       aes(x = delivery_score,
-           y = stars,
-           color = factor(price_range))) +
+plot_delivery_mod <- ggplot(
+  dataset_restaurants,
+  aes(x = delivery_score, y = stars, color = factor(price_range))
+) +
   geom_smooth(method = "lm", se = FALSE) +
-  scale_y_continuous(limits = c(1,5)) +
+  scale_y_continuous(limits = c(1, 5)) +
+  labs(
+    title = "Delivery Score and Star Ratings by Price Range",
+    x = "Delivery Score",
+    y = "Star Rating",
+    color = "Price Range"
+  ) +
   theme_minimal()
+
+plot_delivery_mod
+
+ggsave(
+  filename = here("gen", "output", "plot_delivery_mod.png"),
+  plot = plot_delivery_mod,
+  width = 7,
+  height = 5
+)
 ```
 
 This figure displays the moderating role of price range on the relationship between delivery score and star ratings. For lower-priced restaurants, an increase in delivery-related services is associated with lower customer ratings, as indicated by the negative slope. As price range increases, this relationship weakens and gradually becomes positive. 
@@ -156,16 +222,25 @@ For higher-priced restaurants, delivery services are associated with higher rati
 summary(dataset_restaurants$dinein_score)
 
 #Dataplot for dine_in_score        
-ggplot(dataset_restaurants, aes(x = dinein_score, y = stars)) +
+plot_dinein_stars <- ggplot(dataset_restaurants, aes(x = dinein_score, y = stars)) +
+  geom_point(alpha = 0.2) +
   geom_smooth(method = "lm", color = "black") +
-  scale_y_continuous(limits = c(1,5)) +
+  scale_y_continuous(limits = c(1, 5)) +
   labs(
     title = "Dine-in Score and Star Ratings",
     x = "Dine-in Score",
     y = "Star Rating"
   ) +
-  theme_minimal()   
+  theme_minimal()
 
+plot_dinein_stars
+
+ggsave(
+  filename = here("gen", "output", "plot_dinein_stars.png"),
+  plot = plot_dinein_stars,
+  width = 7,
+  height = 5
+)
 ```
 
 This figure shows the relationship between dine-in score and star ratings. The fitted regression line indicates a positive association, suggesting that restaurants offering more dine-in related services tend to receive higher customer ratings. The slope appears steeper than that observed for delivery score, indicating that dine-in experience may have a stronger relationship with customer evaluations in this dataset.
@@ -198,10 +273,13 @@ This finding contrasts with the moderation observed for delivery services, sugge
 
 ```{r}
 #Data plot for dine_in_score and star ratings by price range
-ggplot(dataset_restaurants,
-       aes(x = dinein_score, y = stars, color = factor(price_range))) +
+
+plot_dinein_mod <- ggplot(
+  dataset_restaurants,
+  aes(x = dinein_score, y = stars, color = factor(price_range))
+) +
   geom_smooth(method = "lm", se = FALSE) +
-  scale_y_continuous(limits = c(1,5)) +
+  scale_y_continuous(limits = c(1, 5)) +
   labs(
     title = "Dine-in Score and Star Ratings by Price Range",
     x = "Dine-in Score",
@@ -209,6 +287,15 @@ ggplot(dataset_restaurants,
     color = "Price Range"
   ) +
   theme_minimal()
+
+plot_dinein_mod
+
+ggsave(
+  filename = here("gen", "output", "plot_dinein_mod.png"),
+  plot = plot_dinein_mod,
+  width = 7,
+  height = 5
+)
 ```
 
 This figure illustrates the moderating role of price range on the relationship between dine-in score and star ratings. Across most price levels, dine-in score is positively associated with customer ratings. However, the strength of this relationship diminishes as price range increases. 
@@ -216,3 +303,44 @@ This figure illustrates the moderating role of price range on the relationship b
 For lower-priced restaurants, improvements in dine-in features are associated with relatively larger increases in star ratings. In contrast, for higher priced-establishments, the relationship is weaker and may approach zero.
 
 This pattern is consistent with the negative interaction term observed in the regression analysis. Indicating that the effect of dine_in experience on ratings diminishes at higher price levels 
+
+**Regression tbale** 
+
+```{r}
+model_delivery <- lm(
+  stars ~ delivery_score,
+  data = dataset_restaurants
+)
+
+model_moderation <- lm(
+  stars ~ delivery_score * price_range,
+  data = dataset_restaurants
+)
+
+model_dinein <- lm(
+  stars ~ dinein_score,
+  data = dataset_restaurants
+)
+
+model_dinein_mod <- lm(
+  stars ~ dinein_score * price_range,
+  data = dataset_restaurants
+)
+stargazer(
+  model_delivery,
+  model_moderation,
+  model_dinein,
+  model_dinein_mod,
+  type = "text",
+  title = "Regression Results",
+  dep.var.labels = "Star Rating",
+  column.labels = c(
+    "Delivery",
+    "Delivery x Price",
+    "Dine-in",
+    "Dine-in x Price"
+  ),
+  digits = 3
+)
+```
+
