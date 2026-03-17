@@ -1,18 +1,26 @@
 ---
 title: "analysis"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
-**Set up chuck**
-```{r}
-library(ggplot2)
-library(here)
-library(readr)
-library(stargazer)
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE
+)
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(here))
+suppressPackageStartupMessages(library(readr))
+suppressPackageStartupMessages(library(stargazer))
+
 dir.create(here("gen", "output"), recursive = TRUE, showWarnings = FALSE)
 ```
-**import data**
+
+**Import data**
+
 ```{r}
 dataset_restaurants <- read_csv(here("data", "restaurants_attributes_extracted.csv"))
 ```
@@ -161,13 +169,13 @@ ggsave(
 summary(model_delivery)
 ```
 
-The delivery and dine-in scores take discrete values, as they are constructed from multiple binary service indicates. The majority of restaurants fall within the lower-to-middle range of both scores, indicating that only a subset of establishments offers many delivery or dine-in related services. 
+The delivery and dine-in scores take discrete values, as they are constructed from multiple binary service indicators. The majority of restaurants fall within the lower-to-middle range of both scores, indicating that only a subset of establishments offers many delivery or dine-in related services. 
 
 A simple linear regression analysis shows a statistically significant negative relationship between delivery score and star rating. Restaurants offering more delivery-related services tend to receive slightly lower ratings.
 
 However, the effect size is small. A one-point increase in delivery score is associated with a decrease of only 0.063 stars. Even across the full delivery scale, the maximum predicted difference in rating is approximately 0.25 stars.
 
-Furthermore, delivery score explains less than 1% of the variance in star ratings, indicating that tis pratcial importance is limited.
+Furthermore, delivery score explains less than 1% of the variance in star ratings, indicating that its pratical importance is limited.
 
 
 **Testing Moderation effect with delivery_score**
@@ -213,7 +221,7 @@ ggsave(
 
 This figure displays the moderating role of price range on the relationship between delivery score and star ratings. For lower-priced restaurants, an increase in delivery-related services is associated with lower customer ratings, as indicated by the negative slope. As price range increases, this relationship weakens and gradually becomes positive. 
 
-For higher-priced restaurants, delivery services are associated with higher ratings, consistent with the positive interaction effect osberved in the regression analysis. Although the slope of the highest price category appears relatively flat visually, the regression results confirm a statistically significant positive interaction effect, indicating that the association between delivery services and ratings becomes more favorable at higher price levels. 
+For higher-priced restaurants, delivery services are associated with higher ratings, consistent with the positive interaction effect observed in the regression analysis. Although the slope of the highest price category appears relatively flat visually, the regression results confirm a statistically significant positive interaction effect, indicating that the association between delivery services and ratings becomes more favorable at higher price levels. 
 
 **Dine_in_score**
 
@@ -257,7 +265,7 @@ The effect size is meaningful: across the observed range of the dine-in-score, t
 
 The model explains about 2.9% of the variance in star ratings, indicating that dine-in experience is a stronger predictor of ratings than delivery options in this dataset.
 
-**Moderation for dine-in**
+**Moderation for dine-in score**
 ```{r}
 #Summary for dine_in_moderation
 model_dinein_mod <- lm(stars ~ dinein_score * price_range, data = dataset_restaurants)
@@ -265,9 +273,9 @@ summary(model_dinein_mod)
 ```
 A regression model including an interaction between dine-in score and price range reveals a statistically significant moderation effect. The interaction indicates that the positive association between dine-in experience and star ratings becomes weaker as price range increases. 
 
-Simple slope calculations suggests that dine-in score is positively related to ratings for lower-priced restaurants. However, the strength of this relationship diminishes for mid-priced establishments and may become slightly negative for the higher price categories.
+Simple slope calculations suggest that dine-in score is positively related to ratings for lower-priced restaurants. However, the strength of this relationship diminishes for mid-priced establishments and may become slightly negative for the higher price categories.
 
-This pattern suggest that dine-in features are particularly valued in lower-priced restaurants, whereas for higher-priced establishments, additional dine-in services do not necessarily translate into higher customer ratings.
+This pattern suggests that dine-in features are particularly valued in lower-priced restaurants, whereas for higher-priced establishments, additional dine-in services do not necessarily translate into higher customer ratings.
 
 This finding contrasts with the moderation observed for delivery services, suggesting that the strategic importance of dine-in features differs across price segments. 
 
@@ -300,11 +308,11 @@ ggsave(
 
 This figure illustrates the moderating role of price range on the relationship between dine-in score and star ratings. Across most price levels, dine-in score is positively associated with customer ratings. However, the strength of this relationship diminishes as price range increases. 
 
-For lower-priced restaurants, improvements in dine-in features are associated with relatively larger increases in star ratings. In contrast, for higher priced-establishments, the relationship is weaker and may approach zero.
+For lower-priced restaurants, improvements in dine-in features are associated with relatively larger increases in star ratings. In contrast, for higher-priced establishments, the relationship is weaker and may approach zero.
 
 This pattern is consistent with the negative interaction term observed in the regression analysis. Indicating that the effect of dine_in experience on ratings diminishes at higher price levels 
 
-**Regression tbale** 
+**Regression table** 
 
 ```{r}
 model_delivery <- lm(
