@@ -1,15 +1,27 @@
 # This script will be used to populate the \data directory
 # with all necessary raw data files.
 
-#Run the installs below if you don't have these R packages yet (by removing the # in front of the lines)
-#install.packages("googledrive")
-#install.packages(tidyverse)
+# Run the installs below if you don't have these R packages yet
+# install.packages("googledrive")
+# install.packages("tidyverse")
 
-#Below is the code to download the relevant yelp datasets, note that you need to choose 1 or 2 in the console to login to google drive to get the authorization to download the data
-suppressWarnings(library(googledrive))
+library(googledrive)
+library(tidyverse)
+
+# Deauthorize to avoid login prompts
 drive_deauth()
-drive_download(as_id("13AZqPcwUro0jwsZIv6Q3WXeEn58YD5_x"), path = "data/users.csv", overwrite = TRUE)
 
+# List of files to download: each element is a named list with id and target path
+files_to_download <- list(
+  list(id = "13AZqPcwUro0jwsZIv6Q3WXeEn58YD5_x", path = "data/users.csv"),
+  list(id = "1iOHDfm7y57dXkM1FoBZlZB3DbnUBXbYD", path = "data/tips.csv")
+)
 
-#run this as well to load the second data set
-drive_download(as_id("1iOHDfm7y57dXkM1FoBZlZB3DbnUBXbYD"), path = "data/tips.csv", overwrite = TRUE)
+# Loop over each file and download
+for (file in files_to_download) {
+  drive_download(
+    as_id(file$id),
+    path = file$path,
+    overwrite = TRUE
+  )
+}
