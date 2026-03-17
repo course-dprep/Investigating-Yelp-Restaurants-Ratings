@@ -1,2 +1,15 @@
-# You can use this file (or similar ones) to work on a report. 
-# Of course, you need to replace them with actual RMarkdown files eventually.
+#Introduction 
+In the restaurant industry, online reviews play an increasingly important role in consumer decision-making. Yelp is a platform that provides highly visible indicators of restaurant quality through star ratings and written reviews. These ratings influence customer choices and can significantly affect a restaurant’s reputation and performance.
+
+Restaurants differ in the way they design and deliver their services. Some restaurants focus on convenient delivery and takeaway options, while others invest in the dine-in experience through table service, reservations, outdoor seating, or group-friendly facilities. These strategic service choices may shape how customers evaluate their experience and, ultimately, how they rate the restaurant online.
+
+Another factor that can influence customer experience is price level. Customers paying higher prices may evaluate service quality, atmosphere, and dining experience more critically, whereas lower-priced restaurants may be assessed more strongly on efficiency and accessibility. As a result, the relationship between service options and online ratings may vary depending on the restaurant’s price range.
+
+This study investigates the impact of delivery options and dine-in experience features on Yelp restaurant ratings. Specifically, we examine whether these service characteristics are associated with higher or lower star ratings and whether price level moderates these relationships. By doing so, we aim to provide insights into which operational features are most strongly linked to online evaluations across different price segments.
+
+# Research Question
+This study addresses the following research question:
+
+What effects do delivery options and dine-in experience have on the star rating of a restaurant, and how does the price range of the restaurant moderate these relationships?
+
+# Data
