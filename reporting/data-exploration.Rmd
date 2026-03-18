@@ -51,20 +51,23 @@ Finally, the cleaned restaurant dataset was merged with the tips dataset using `
 
 ## Distributions
 
-Basic plots for the most important variables.
+To better understand the cleaned dataset, the main variables were explored descriptively. The dependent variable, `stars` ranges from 1 to 5, with most restaurants concentrated between approximately 3 and 4.5 stars. The mean star rating is 3.46 with a standard deviation of 0.8, indicating that restaurants in the dataset generally receive moderately positive evaluations. The distribution appears slightly left-skewed, meaning that very low ratings occur relatively infrequently. This is relevant because `stars` is the main outcome variable in the analysis. The histogram in the analysis document on pages 1-2 shows this clustering clearly. 
 
--   Are variables skewed?
+The moderator, `price_range` is distrbuted unevenly across categories. Most restauratns fall into the lower price levels, especially categories 1 and 2, while categories 3 and 4 are much less common. This indicates that the sample is skewed toward lower-priced restaurants. Because `price_range` is later used as a moderator, this imbalance should be kept in mind when interpreting interaction effects. The distribution is shown on page 2-4 of the analysis PDF
 
--   Any weird patterns?
+The constructed service variables, `delivery_score` and `dinein_score`, also show menaingful variation. `delivery_score` ranges from 0 to 4 with a mean of 1.93, while `dinein_score` ranges from 0 to 6 with a mean of 2.67. In both cases, most restaurants are concentrated in the lower to middle part of the scale, which suggests that only a subset of restaurants offers a wide range of services. The histograms on page 4-6 confirm that both variables are discrete and not normally distributed, which makes sence because they are sums of binary indicators. 
+
 
 ## Missing values (NA)
 
--   Are there missing values? How might they affect analysis?
+Missing values were partly addressed during the cleaning stage of the pipeline. Restaurants without a recorded `price_range` were removed from the dataset to ensure comparability across observations. This means that the final analytical dataset no longer contains missing values on this moderator. In addition, several semi-structured service variables were extracted from the `attributes` column and recoded into binary indicators. where no information was available for certain attributes, values could remain missing depending on whether the service was absent or simply not recorded. 
+
+In the merged dataset, missing values for aggregated tip-related variables were treated differently. For instance, missing values in the summed tip compliment count were replaced by zero, because the absence of recorded compliments is more appropriately interpreted as none observed rather than unknown data. This improves consistency in the merged restaurant level dataset and avoids losing observations unnecessarily. 
 
 ## Basic relations
 
-basix exploration (not full modelling yet)
+The exploratory analysis already suggests several meaningful patterns between the main variables. First, `delivery_score` appears to be negatively related to `stars`. The scatterplot and fitted regression line show a slight downward trend, and the simple linear regression confirms a small but statistically significant negative effect. A one point increase in `delivery_score` is associated with a decrease of about 0.063 stars. However, the explained variance is very low R-squared = 0.005, which means that the practical importance of this relationship is limited.
 
--   do variables seem related?
+Second, `dinein_score shows` a clearer positive relationship association with `stars`. The exploratory plot indicates that restaurants offering more dine-in related services tend to receive higher ratings. This is supported by the regression coefficient of about 0.097, which is statistically significant, and has a somewhat larger explained variance r-sqaured = 0.029. This suggest that `dine-in features` may be more strongly related to customer evaluations than `delivery-related services`. 
 
--   any visible trends?
+Finally, there are visible moderation patterns involing `price_range`. The interaction plot and regression results in the analysis show that the negative relationship between `delivery_score`and `ratings` becomes weaker as price range increases, and may even become positive for higher-priced restaurants. For `dinein_score`the opposite pattern appears: the positive relationship with ratings becomes weaker as price range increases. These exploratory findings suggest that the effect of service offerings may depend on restaurant price category. 
