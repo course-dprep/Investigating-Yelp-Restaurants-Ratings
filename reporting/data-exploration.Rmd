@@ -11,9 +11,25 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Data exploration & Explanation
 
-## Introduction to the dataset
+This project starts with the download of two raw datasets produced by Yelp. These datasets are called users.csv and tips.csv and are downloaded from Google drive for easy access.
 
-The data consists of two datasets produced by Yelp, downloaded from Google Drive for easy access. Two raw datasets are downloaded: users.csv & tips.csv.
+## Introduction to the data set & data cleaning notes
+
+The raw dataset (`users.csv`) was first filtered to retain only observations corresponding to restaurants. This was done by identifying entries in the `categories` variable that contain the term “Restaurants”. Additionally, observations without a recorded price range (`RestaurantsPriceRange2`) were removed to ensure consistency in subsequent analyses.
+
+Next, relevant attributes were extracted from the semi-structured `attributes` column using regular expressions. These attributes include service-related characteristics such as delivery, takeout, reservations, and table service (see table below for the full list and operationalisation). The extracted variables were grouped conceptually into delivery-related features (e.g., delivery, takeout, drive-thru) and dine-in features (e.g., reservations, outdoor seating, table service).
+
+To facilitate quantitative analysis, boolean attributes originally stored as `"True"` and `"False"` were converted into numeric indicators (1 and 0). The `price_range` variable was extracted and converted to a numeric format. The `Alcohol` attribute was also cleaned and recoded into categorical levels (`none`, `beer_and_wine`, and `full_bar`).
+
+Observations with missing values for `price_range` were removed during the cleaning process. Before merging the datasets, missing values in aggregated variables such as tip compliment counts were replaced with zero to reflect the absence of recorded compliments rather than missing information.
+
+To capture the extent of service offerings, two composite variables were constructed. The `delivery_score` represents the sum of delivery-related services, while the `dinein_score` represents the sum of dine-in related services. These variables provide a concise measure of how many services each restaurant offers in each category.
+
+Finally, the cleaned restaurant dataset was merged with the tips dataset using `business_id` as a key. Tip-level data was aggregated to the restaurant level by summing the `compliment_count` variable. The resulting datasets were saved at different stages of the pipeline, including `restaurants_clean.csv`, `restaurants_attributes_extracted.csv`, and `restaurants_merged.csv`.
+
+```{r}
+# hierin nog de bovenkanten van belangrijke datasets invoegen nadat error is gefikst
+```
 
 ## Important variables and their operationalisation
 
@@ -33,4 +49,22 @@ The data consists of two datasets produced by Yelp, downloaded from Google Drive
 | RestaurantTableService | Whether table service is offered | Binary variable (1 = yes, 0 = no) | Dine-in cluster |
 | price_range | Restaurant price category | Ordinal scale representing price levels (1 \$ \<–\> 4 \$\$\$\$) | Moderator |
 
-## Basic data exploration for the key variables
+## Distributions
+
+Basic plots for the most important variables.
+
+-   Are variables skewed?
+
+-   Any weird patterns?
+
+## Missing values (NA)
+
+-   Are there missing values? How might they affect analysis?
+
+## Basic relations
+
+basix exploration (not full modelling yet)
+
+-   do variables seem related?
+
+-   any visible trends?
