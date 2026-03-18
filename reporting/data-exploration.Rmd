@@ -1,0 +1,36 @@
+---
+title: "data-exploration"
+author: "Willem van de Merbel"
+date: "2026-03-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data exploration & Explanation
+
+## Introduction to the dataset
+
+The data consists of two datasets produced by Yelp, downloaded from Google Drive for easy access. Two raw datasets are downloaded: users.csv & tips.csv.
+
+## Important variables and their operationalisation
+
+| **Variable** | **Description** | **Operationalisation** | **Role** |
+|--------------------|-------------------|-----------------------|-----------|
+| stars | Average Yelp rating of the restaurant | Numeric value from 1–5 based on Yelp reviews | Dependent variable |
+| RestaurantsDelivery | Whether the restaurant offers delivery | Binary variable (1 = delivery available, 0 = no delivery) | Delivery cluster |
+| RestaurantsTakeOut | Whether takeout is available | Binary variable (1 = takeout available, 0 = not available) | Delivery cluster |
+| Caters | Whether catering services are offered | Binary variable (1 = yes, 0 = no) | Delivery cluster |
+| DriveThru | Presence of drive-through service | Binary variable (1 = yes, 0 = no) | Delivery cluster |
+| RestaurantsReservations | Whether reservations are accepted | Binary variable (1 = yes, 0 = no) | Dine-in cluster |
+| RestaurantsGoodForGroups | Whether the restaurant is suitable for groups | Binary variable (1 = yes, 0 = no) | Dine-in cluster |
+| Alcohol | Whether alcohol is served | Categorical variable indicating alcohol availability | Dine-in cluster |
+| HappyHour | Whether the restaurant offers happy hour | Binary variable (1 = yes, 0 = no) | Dine-in cluster |
+| OutdoorSeating | Whether outdoor seating is available | Binary variable (1 = yes, 0 = no) | Dine-in cluster |
+| GoodForKids | Whether the restaurant is suitable for kids | Binary variable (1 = yes, 0 = no) | Dine-in cluster |
+| RestaurantTableService | Whether table service is offered | Binary variable (1 = yes, 0 = no) | Dine-in cluster |
+| price_range | Restaurant price category | Ordinal scale representing price levels (1 \$ \<–\> 4 \$\$\$\$) | Moderator |
+
+## Basic data exploration for the key variables
