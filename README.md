@@ -125,8 +125,7 @@ The generated reports can be found in the reporting/ directory:
 - reporting/Merging_tip_and_restaurant.html
 - reporting/Analysis.html
 
-## About
+##Members
 
-This project is set up as part of the Master's course [Data Preparation & Workflow Management](https://dprep.hannesdatta.com/) at the [Department of Marketing](https://www.tilburguniversity.edu/about/schools/economics-and-management/organization/departments/marketing), [Tilburg University](https://www.tilburguniversity.edu/), the Netherlands.
-
-The project is implemented by team \< x \> members: \< insert member details\>
+Team 3,
+* Maud Dreuning, e-mail: m.dreuning@tilburguniversity.edu
