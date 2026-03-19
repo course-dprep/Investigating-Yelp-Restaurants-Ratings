@@ -5,6 +5,11 @@
 \> Feel free to delete this text.
 
 # Title of your Project
+R. Installation guide.
+
+Make. Installation guide.
+
+Pandoc. Installation guide
 
 *Describe the purpose of this project*
 
