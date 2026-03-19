@@ -125,7 +125,7 @@ The generated reports can be found in the reporting/ directory:
 - reporting/Merging_tip_and_restaurant.html
 - reporting/Analysis.html
 
-##Members
+## Members
 
 Team 3,
 * Maud Dreuning, e-mail: m.dreuning@tilburguniversity.edu
