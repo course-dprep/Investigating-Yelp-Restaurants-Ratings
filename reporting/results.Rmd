@@ -1,0 +1,153 @@
+---
+title: "Results Section of The Impact of Delivery and Dine-In Services on Yelp Restaurant Ratings"
+author: "Simona Hu"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+library(readr)
+library(ggplot2)
+library(here)
+library(stargazer)
+```
+
+```{r}
+dataset_restaurants <- read_csv(here("data", "restaurants_attributes_extracted.csv"))
+```
+
+## Descriptive Statistics
+
+```{r cars}
+#Mean and SD
+m_stars <- mean(dataset_restaurants$stars, na.rm = TRUE)
+sd_stars <- sd(dataset_restaurants$stars, na.rm=TRUE)
+
+m_stars
+sd_stars
+
+#Histogram
+plot_stars <- ggplot(dataset_restaurants, aes(x = stars)) +
+  geom_histogram(binwidth = 0.5, fill = "#A6CEE3", color = "white") +
+  labs(
+    title = "Distribution of Restaurant Star Ratings",
+    x = "Star Rating",
+    y = "Number of Restaurants"
+  ) +
+  theme_minimal()
+
+plot_stars
+```
+
+Restaurant star ratings range from 1 to 5, with an average of 3.46 (SD = 0.81), indicating generally positive customer evaluations. Most restaurants are concentrated between ratings of approximately 3 and 4.5 stars, with relatively few low-rated establishments.
+
+Lower price categories dominate the sample, suggesting that the dataset is skewed towards more affordable restaurants. Additionally, both delivery and dine-in scores show sufficient variation, supporting their use as explanatory variables in the regression analysis.
+
+## Effect of delivery options on star ratings
+
+```{r pressure, echo=FALSE}
+plot_delivery_stars <- ggplot(dataset_restaurants, aes(x = delivery_score, y = stars)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(method = "lm", color = "black") +
+  labs(
+    title = "Delivery Score and Star Ratings",
+    x = "Delivery Score",
+    y = "Star Rating"
+  ) +
+  scale_y_continuous(limits = c(1, 5)) +
+  theme_minimal()
+
+plot_delivery_stars
+
+ggsave(
+  filename = here("gen", "output", "plot_delivery_stars.png"),
+  plot = plot_delivery_stars,
+  width = 7,
+  height = 5
+)
+model_delivery <- lm(stars ~ delivery_score, data = dataset_restaurants)
+summary(model_delivery)
+```
+
+## Moderating role of price range in the delivery options
+
+```{r pressure, echo=FALSE}
+
+plot_delivery_moderation <- ggplot(
+  dataset_restaurants,
+  aes(x = delivery_score, y = stars, color = factor(price_range))
+) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Moderating Effect of Price Range on Delivery Score and Star Ratings",
+    x = "Delivery Score",
+    y = "Star Rating",
+    color = "Price Range"
+  ) +
+  scale_y_continuous(limits = c(1, 5)) +
+  theme_minimal()
+
+plot_delivery_moderation
+
+ggsave(
+  filename = here("gen", "output", "plot_delivery_moderation.png"),
+  plot = plot_delivery_moderation,
+  width = 7,
+  height = 5
+)
+```
+
+## Effect of dine-in experience on star ratings
+
+```{r pressure, echo=FALSE}
+plot_dinein_stars <- ggplot(dataset_restaurants, aes(x = dinein_score, y = stars)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(method = "lm", color = "black") +
+  labs(
+    title = "Dine-In Score and Star Ratings",
+    x = "Dine-In Score",
+    y = "Star Rating"
+  ) +
+  scale_y_continuous(limits = c(1, 5)) +
+  theme_minimal()
+
+plot_dinein_stars
+
+ggsave(
+  filename = here("gen", "output", "plot_dinein_stars.png"),
+  plot = plot_dinein_stars,
+  width = 7,
+  height = 5
+)
+model_dinein <- lm(stars ~ dinein_score, data = dataset_restaurants)
+summary(model_dinein)
+```
+
+## Moderating role of price range in the dine-in options
+
+```{r pressure, echo=FALSE}
+model_dinein_mod <- lm(stars ~ dinein_score * price_range, data = dataset_restaurants)
+summary(model_dinein_mod)
+
+```
+
+## Summary table of models
+
+```{r pressure, echo=FALSE}
+stargazer(
+  model_delivery,
+  model_moderation,
+  model_dinein,
+  model_dinein_mod,
+  ...
+)
+```
+
+## 
