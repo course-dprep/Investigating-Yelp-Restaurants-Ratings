@@ -55,7 +55,7 @@ The most effective method for our investigation is multiple linear regression si
 
 This project is expected to provide insights into how delivery-related options and dine-in experiences are associated with Yelp restaurant ratings, and whether these relationships differ across price levels. More specifically, the analysis examines whether attributes such as delivery, takeout, reservations, outdoor seating, table service and other restaurant features are systematically related to star ratings. The project focuses on identifying associaions between restaurant characteristics and Yelp ratings rather than making causal claims. The final project will be a reproducible analytical report created in R Markdown and exported to PDF, with the full workflow integrated into the GitHub repository. This allows the analysis to be reproduced from data preparation to the final reporting stage.
 
-# Relevance of these findings
+## Relevance of these findings
 
 The findings of the project are relevant because they contribute to a better understanding of which restaurant characteristics are linked to customer evaluations on Yelp. Such insights may be useful for interpreting patterns in online ratings and for identifying service features that appear to matter more strongly across different price segments. These findings may also be relevant for restaurant owners and managers who want to better understand which service-related features are associated with more favorable customer ratings on online platforms. In addition, the project’s reproducible workflow is itself an important outcome, as it supports transparency, replicability, and future collaboration by allowing others to trace, verify, and rerun the complete analysis. 
 
