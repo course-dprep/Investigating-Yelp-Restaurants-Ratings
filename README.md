@@ -50,7 +50,12 @@ Dine in experience –\> RestaurantsReservations, RestaurantsGoodForGroups, Alco
 
 ## Dependencies
 
-*Explain any tools or packages that need to be installed to run this workflow.*
+
+- Python. [Installation guide.](http://tilburgsciencehub.com/python-installation-guide)
+- R. [Installation guide.](http://tilburgsciencehub.com/R-installation-guide)
+- Make. [Installation guide.](http://tilburgsciencehub.com/make-installation-guide)
+
+- To knit RMarkdown documents, make sure you have installed Pandoc using the [installation guide](https://pandoc.org/installing.html) on their website.
 
 ## Running Instructions
 
