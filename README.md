@@ -83,22 +83,23 @@ Investigating-Yelp-Restaurants-Ratings
 ```
 ## Dependencies
 
-This project requires the following software:
+Please follow the installation guides on [Tilburg Science Hub](http://tilburgsciencehub.com/).
 
-- R (version 4.0 or higher)
-- GNU Make
-- Pandoc (included with RStudio)
+- R. [Installation guide.](http://tilburgsciencehub.com/R-installation-guide)
+- Make. [Installation guide.](http://tilburgsciencehub.com/make-installation-guide)
+- To knit RMarkdown documents, make sure you have installed Pandoc using the [installation guide](https://pandoc.org/installing.html) on their website.
 
-Required R packages:
+For R, make sure you have installed the following packages:
 
-- tidyverse
-- dplyr
-- stringr
-- readr
-- ggplot2
-- data.table
-- googledrive
-- here
+```r
+install.packages("tidyverse")
+install.packages("dplyr")
+install.packages("stringr")
+install.packages("readr")
+install.packages("ggplot2")
+install.packages("data.table")
+install.packages("googledrive")
+install.packages("here")
 
 ## Running Instructions
 
