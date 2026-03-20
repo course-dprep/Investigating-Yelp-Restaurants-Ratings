@@ -85,8 +85,8 @@ Investigating-Yelp-Restaurants-Ratings
 
 Please follow the installation guides on [Tilburg Science Hub](http://tilburgsciencehub.com/).
 
-- R. [Installation guide.](http://tilburgsciencehub.com/R-installation-guide)
-- Make. [Installation guide.](http://tilburgsciencehub.com/make-installation-guide)
+- R. [Installation guide.](hhttps://www.tilburgsciencehub.com/topics/Computer-Setup/software-installation/RStudio/r/)
+- Make. [Installation guide.](https://www.tilburgsciencehub.com/topics/Automation/automation-tools/Makefiles/make/)
 - To knit RMarkdown documents, make sure you have installed Pandoc using the [installation guide](https://pandoc.org/installing.html) on their website.
 
 For R, make sure you have installed the following packages:
@@ -100,6 +100,7 @@ install.packages("ggplot2")
 install.packages("data.table")
 install.packages("googledrive")
 install.packages("here")
+install.packages("stargazer")
 ```
 ## Running Instructions
 
