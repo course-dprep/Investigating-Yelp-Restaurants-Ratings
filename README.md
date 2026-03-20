@@ -70,10 +70,10 @@ Investigating-Yelp-Restaurants-Ratings
 │ ├── data-preparation/
 │ │ ├── data-cleaning.R
 │ │ ├── Extracting_Attributes.R
-│ │ └── Merging_tip_and_restaurant.Rmd
+│ │ └── Merging_tip_and_restaurant.R
 │ │
 │ └── analysis/
-│     └── Analysis.Rmd
+│     └── Analysis.R
 │
 ├── reporting/
 │
