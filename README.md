@@ -53,11 +53,11 @@ The most effective method for our investigation is multiple linear regression si
 
 ## Preview of Findings
 
-This project is expected to provide insights into how delivery-related options and dine-in experience are associated with Yelp restaurants ratings, and whether these relationships differ across price levels. More specifically, the analysis examines whether attributes such as delivery, takeout, reservations, outdoor seating, table service and other restaurant features are systematically related to star ratings. The final product of the project will be a reproducible analytical report created in RMarkdown and exported to PDF, with the full workflow integrated into the GitHub repository. This allows the analysis to be reproduced from data preparation to the final reporting stage.
+This project is expected to provide insights into how delivery-related options and dine-in experiences are associated with Yelp restaurant ratings, and whether these relationships differ across price levels. More specifically, the analysis examines whether attributes such as delivery, takeout, reservations, outdoor seating, table service and other restaurant features are systematically related to star ratings. The project focuses on identifying associaions between restaurant characteristics and Yelp ratings rather than making causal claims. The final project will be a reproducible analytical report created in R Markdown and exported to PDF, with the full workflow integrated into the GitHub repository. This allows the analysis to be reproduced from data preparation to the final reporting stage.
 
-Relevance of these findings
+## Relevance of these findings
 
-The findings of the project are relevant because they contribute to a better understanding of which restaurant characteristics are linked to customer evaluations on Yelp. Such insights may be useful for interpreting patterns in online ratings and for identifying service features that appear to matter more strongly across different price segments. In addition, the project’s reproducible workflow is itself an important outcome, as it supports transparency, replicability, and future collaboration by allowing others to trace, verify and rerun the complete analysis. 
+The findings of the project are relevant because they contribute to a better understanding of which restaurant characteristics are linked to customer evaluations on Yelp. Such insights may be useful for interpreting patterns in online ratings and for identifying service features that appear to matter more strongly across different price segments. These findings may also be relevant for restaurant owners and managers who want to better understand which service-related features are associated with more favorable customer ratings on online platforms. In addition, the project’s reproducible workflow is itself an important outcome, as it supports transparency, replicability, and future collaboration by allowing others to trace, verify, and rerun the complete analysis. 
 
 
 ## Repository Overview
@@ -83,23 +83,25 @@ Investigating-Yelp-Restaurants-Ratings
 ```
 ## Dependencies
 
-This project requires the following software:
+Please follow the installation guides on [Tilburg Science Hub](http://tilburgsciencehub.com/).
 
-- R (version 4.0 or higher)
-- GNU Make
-- Pandoc (included with RStudio)
+- R. [Installation guide.](https://www.tilburgsciencehub.com/topics/Computer-Setup/software-installation/RStudio/r/)
+- Make. [Installation guide.](https://www.tilburgsciencehub.com/topics/Automation/automation-tools/Makefiles/make/)
+- To knit RMarkdown documents, make sure you have installed Pandoc using the [installation guide](https://pandoc.org/installing.html) on their website.
 
-Required R packages:
+For R, make sure you have installed the following packages:
 
-- tidyverse
-- dplyr
-- stringr
-- readr
-- ggplot2
-- data.table
-- googledrive
-- here
-
+```r
+install.packages("tidyverse")
+install.packages("dplyr")
+install.packages("stringr")
+install.packages("readr")
+install.packages("ggplot2")
+install.packages("data.table")
+install.packages("googledrive")
+install.packages("here")
+install.packages("stargazer")
+```
 ## Running Instructions
 
 1. Open a terminal in the project directory.
