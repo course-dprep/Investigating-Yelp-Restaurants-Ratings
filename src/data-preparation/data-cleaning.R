@@ -4,9 +4,10 @@
 library(dplyr)
 library(stringr)
 library(tidyverse)
+library(here)
 
 #input
-Dataset_raw <- read_csv("data/users.csv")
+Dataset_raw <- read_csv(here("data", "users.csv"))
 
 #data cleaning
 dataset_restaurants <- Dataset_raw %>%
