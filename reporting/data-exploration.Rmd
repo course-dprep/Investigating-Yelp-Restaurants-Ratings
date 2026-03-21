@@ -25,22 +25,8 @@ The raw dataset (`users.csv`) was first filtered to retain only observations cor
 
 Next, relevant attributes were extracted from the semi-structured `attributes` column using regular expressions. These attributes include service-related characteristics such as delivery, takeout, reservations, and table service (see table below for the full list and operationalisation). The extracted variables were grouped conceptually into delivery-related features (e.g., delivery, takeout, drive-thru) and dine-in features (e.g., reservations, outdoor seating, table service).
 
-To facilitate quantitative analysis, boolean attributes originally stored as `"True"` and `"False"` were converted into numeric indicators (1 and 0). The `price_range` variable was extracted and converted to a numeric format. The `Alcohol` attribute was also cleaned and recoded into categorical levels (`none`, `beer_and_wine`, and `full_bar`).
-
-Observations with missing values for `price_range` were removed during the cleaning process. Before merging the datasets, missing values in aggregated variables such as tip compliment counts were replaced with zero to reflect the absence of recorded compliments rather than missing information.
-
-To capture the extent of service offerings, two composite variables were constructed. The `delivery_score` represents the sum of delivery-related services, while the `dinein_score` represents the sum of dine-in related services. These variables provide a concise measure of how many services each restaurant offers in each category.
-
-Finally, the cleaned restaurant dataset was merged with the tips dataset using `business_id` as a key. Tip-level data was aggregated to the restaurant level by summing the `compliment_count` variable. The resulting datasets were saved at different stages of the pipeline, including `restaurants_clean.csv`, `restaurants_attributes_extracted.csv`, and `restaurants_merged.csv`.
-
-```{r}
-# hierin nog de bovenkanten van belangrijke datasets invoegen nadat error is gefikst
-```
-
-## Important variables and their operationalisation
-
 | **Variable** | **Description** | **Operationalisation** | **Role** |
-|--------------------|-------------------|-----------------------|-----------|
+|----|----|----|----|
 | stars | Average Yelp rating of the restaurant | Numeric value from 1–5 based on Yelp reviews | Dependent variable |
 | RestaurantsDelivery | Whether the restaurant offers delivery | Binary variable (1 = delivery available, 0 = no delivery) | Delivery cluster |
 | RestaurantsTakeOut | Whether takeout is available | Binary variable (1 = takeout available, 0 = not available) | Delivery cluster |
@@ -55,15 +41,37 @@ Finally, the cleaned restaurant dataset was merged with the tips dataset using `
 | RestaurantTableService | Whether table service is offered | Binary variable (1 = yes, 0 = no) | Dine-in cluster |
 | price_range | Restaurant price category | Ordinal scale representing price levels (1 \$ \<–\> 4 \$\$\$\$) | Moderator |
 
+To facilitate quantitative analysis, boolean attributes originally stored as `"True"` and `"False"` were converted into numeric indicators (1 and 0). The `price_range` variable was extracted and converted to a numeric format. The `Alcohol` attribute was also cleaned and recoded into categorical levels (`none`, `beer_and_wine`, and `full_bar`).
+
+Observations with missing values for `price_range` were removed during the cleaning process. Before merging the datasets, missing values in aggregated variables such as tip compliment counts were replaced with zero to reflect the absence of recorded compliments rather than missing information.
+
+To capture the extent of service offerings, two composite variables were constructed. The `delivery_score` represents the sum of delivery-related services, while the `dinein_score` represents the sum of dine-in related services. These variables provide a concise measure of how many services each restaurant offers in each category.
+
+Finally, the cleaned restaurant dataset was merged with the tips dataset using `business_id` as a key. Tip-level data was aggregated to the restaurant level by summing the `compliment_count` variable. The resulting datasets were saved at different stages of the pipeline, including `restaurants_clean.csv`, `restaurants_attributes_extracted.csv`, and `restaurants_merged.csv`.
+
+```{r}
+# Below are the upper sections of the two final datasets. restaurants_attributes_extracted.csv is used in our analysis, restaurants_merged.csv is used to show the ability to merge datasets, using the business Id as matching key
+library(readr)
+library(here)
+
+# Restaurants with extracted attributes
+head(read_csv(here("data", "restaurants_attributes_extracted.csv")), 5)
+```
+
+```{r}
+# Final merged dataset
+head(read_csv(here("data", "restaurants_merged.csv")), 5)
+```
+
 ```{r}
 source(here("src", "analysis", "analysis.R"))
 ```
 
 ## Distributions
 
-Before examining the relationship between variables, it is useful to first explore the distribution of the main variables in the merged dataset. This gives a clearer overview of what the data looks like and helps assess whether certain values occur frequently or only rarely. 
+Before examining the relationship between variables, it is useful to first explore the distribution of the main variables in the merged dataset. This gives a clearer overview of what the data looks like and helps assess whether certain values occur frequently or only rarely.
 
-The dependent variable in this analysis is `stars`, which reflects the average Yelp rating of a restaurant on a scale from 1 to 5. Figure 1 shows that most restaurants are concentrated between approximately 3 and 4.5 stars. The mean star rating is 3.46, with a standard deviation of 0.80, indicating that restaurants in the dataset generally receive moderately positive evaluations while still showing meaningful variation. The distribution appears slightly left-skewed, meaning that lower ratings are relatively uncommon compared to mid-range and higher ratings. This is important because `stars` is the main outcome variable in the analysis, and understanding its distribution provides context for interpreting the regression results later on. 
+The dependent variable in this analysis is `stars`, which reflects the average Yelp rating of a restaurant on a scale from 1 to 5. Figure 1 shows that most restaurants are concentrated between approximately 3 and 4.5 stars. The mean star rating is 3.46, with a standard deviation of 0.80, indicating that restaurants in the dataset generally receive moderately positive evaluations while still showing meaningful variation. The distribution appears slightly left-skewed, meaning that lower ratings are relatively uncommon compared to mid-range and higher ratings. This is important because `stars` is the main outcome variable in the analysis, and understanding its distribution provides context for interpreting the regression results later on.
 
 ```{r}
 include_graphics(here("gen", "figures", "fig1_stars.png"))
@@ -75,7 +83,7 @@ The moderator in this analysis is `price_range`, which captures the restaurant's
 include_graphics(here("gen", "figures", "fig2_price_range.png"))
 ```
 
-The constructed service variables, `delivery_score` and `dinein_score`, also show meaningful variation across restaurants. These variables summarize the number of delivery-related and dine-in-related services offered by a restaurant.  `delivery_score` ranges from 0 to 4 with a mean of 1.93, while `dinein_score` ranges from 0 to 6 with a mean of 2.67. Figure 3 and 4 show that in both cases, most restaurants offer some services, but only a smaller subset offers a wide range of delivery or dine-in options. The histograms also show that both variables are discrete rather than continuous, which is expected because they are based on sums of binary indicators. 
+The constructed service variables, `delivery_score` and `dinein_score`, also show meaningful variation across restaurants. These variables summarize the number of delivery-related and dine-in-related services offered by a restaurant. `delivery_score` ranges from 0 to 4 with a mean of 1.93, while `dinein_score` ranges from 0 to 6 with a mean of 2.67. Figure 3 and 4 show that in both cases, most restaurants offer some services, but only a smaller subset offers a wide range of delivery or dine-in options. The histograms also show that both variables are discrete rather than continuous, which is expected because they are based on sums of binary indicators.
 
 ```{r}
 include_graphics(here("gen", "figures", "fig3_delivery_hist.png"))
@@ -89,31 +97,31 @@ Taken together, these descriptive plots show that the dataset contains sufficien
 
 ## Missing values (NA)
 
-Missing values were partly addressed during the cleaning stage of the pipeline. Restaurants without a recorded `price_range` were removed from the dataset to ensure comparability across observations. As a result, the final analytical dataset no longer contains missing values on this moderator. 
+Missing values were partly addressed during the cleaning stage of the pipeline. Restaurants without a recorded `price_range` were removed from the dataset to ensure comparability across observations. As a result, the final analytical dataset no longer contains missing values on this moderator.
 
-For the service variables extracted from the `attributes` column, the interpretation of missing values is more nuanced. These variables were recoded into binary indicators based on whether a specific service was mentioned in the available restaurant information. In some cases, missing values may reflect that a service was not recorded rather than that it was definitely unavailable. 
+For the service variables extracted from the `attributes` column, the interpretation of missing values is more nuanced. These variables were recoded into binary indicators based on whether a specific service was mentioned in the available restaurant information. In some cases, missing values may reflect that a service was not recorded rather than that it was definitely unavailable.
 
-In the merged dataset, missing values for aggregated tip-related variables were handled differently. For instance, missing values in the summed tip compliment count were replaced by zero. This was a reasonable choice because the absence of recorded compliments is more approximately interpreted as none observed rather than as unknown information. This improves consistency in the merged restaurant-level dataset and avoids losing observations unnecessarily. 
+In the merged dataset, missing values for aggregated tip-related variables were handled differently. For instance, missing values in the summed tip compliment count were replaced by zero. This was a reasonable choice because the absence of recorded compliments is more approximately interpreted as none observed rather than as unknown information. This improves consistency in the merged restaurant-level dataset and avoids losing observations unnecessarily.
 
-Overall, the treatment of missing values depended on the meaning of the variable. Missing observations on an important moderator such as `price_range` were removed, while missing values in count-based variables were, where appropriate, recoded to zero. 
+Overall, the treatment of missing values depended on the meaning of the variable. Missing observations on an important moderator such as `price_range` were removed, while missing values in count-based variables were, where appropriate, recoded to zero.
 
 ## Basic relations
 
 After describing the main variables separately, the next step is to examine the basic relationship between the service variables and restaurant ratings. The following plots provide an initial visual impression of these associations
 
-Figure 5 shows the relationship between `delivery_score` and `stars`. The fitted regression line slopes slightly downward, suggesting a negative association. This means that restaurants offering more delivery-related services tend to receive somewhat lower ratings on average. The corresponding simple linear regression confirms a small but statistically significant negative effect: a one-point increase in `delivery_score` is associated with a decrease of about 0.063 stars. At the same time, the explained variance is very low with an R-squared of 0.005, indicating that the practical importance of this relationship is limited. 
+Figure 5 shows the relationship between `delivery_score` and `stars`. The fitted regression line slopes slightly downward, suggesting a negative association. This means that restaurants offering more delivery-related services tend to receive somewhat lower ratings on average. The corresponding simple linear regression confirms a small but statistically significant negative effect: a one-point increase in `delivery_score` is associated with a decrease of about 0.063 stars. At the same time, the explained variance is very low with an R-squared of 0.005, indicating that the practical importance of this relationship is limited.
 
 ```{r}
 include_graphics(here("gen", "figures", "fig5_delivery_stars.png"))
 ```
 
-Figure 6, shows the relationship between `dinein_score` and `stars`. Here, the fitted regression line slopes upward, indicating a positive association. Restaurants that offer more dine-in-related services tend to receive somewhat higher ratings. This is consistent with the regression coefficient of about 0.097, which is statistically significant. The explained variance is still modest, but somewhat larger than in the delivery model with an R-squared of 0.029. This suggests that `dine-in features` may be more strongly related to customer evaluations than `delivery-related services`. 
+Figure 6, shows the relationship between `dinein_score` and `stars`. Here, the fitted regression line slopes upward, indicating a positive association. Restaurants that offer more dine-in-related services tend to receive somewhat higher ratings. This is consistent with the regression coefficient of about 0.097, which is statistically significant. The explained variance is still modest, but somewhat larger than in the delivery model with an R-squared of 0.029. This suggests that `dine-in features` may be more strongly related to customer evaluations than `delivery-related services`.
 
 ```{r}
 include_graphics(here("gen", "figures", "fig6_dinein_stars.png"))
 ```
 
-Finally, figures 7 and 8 show how these relationships vary across levels of `price_range`. In Figure 7, the negative relationship between `delivery_score` and `stars` appears to become weaker as `price_range` increases, and may even become slightly positive for higher-priced restaurants. In Figure 8, the pattern for  `dinein_score` appears to move in the opposite direction: the positive relationship with ratings seems stronger for lower-priced restaurants and weaker for higher-priced restaurants. These visual patterns suggest that the relationship between service offerings and ratings may depend on restaurant price category, which supports the use of interaction terms in the later regression analysis. 
+Finally, figures 7 and 8 show how these relationships vary across levels of `price_range`. In Figure 7, the negative relationship between `delivery_score` and `stars` appears to become weaker as `price_range` increases, and may even become slightly positive for higher-priced restaurants. In Figure 8, the pattern for `dinein_score` appears to move in the opposite direction: the positive relationship with ratings seems stronger for lower-priced restaurants and weaker for higher-priced restaurants. These visual patterns suggest that the relationship between service offerings and ratings may depend on restaurant price category, which supports the use of interaction terms in the later regression analysis.
 
 ```{r}
 include_graphics(here("gen", "figures", "fig7_delivery_mod.png"))
@@ -123,4 +131,4 @@ include_graphics(here("gen", "figures", "fig7_delivery_mod.png"))
 include_graphics(here("gen", "figures", "fig8_dinein_mod.png"))
 ```
 
-Taken together, the exploratory analysis suggests that delivery-related and dine-in-related services are associated with restaurant ratings in different ways. Delivery-related services show a slight negative association, while dine-in services show a clearer positive association. In addition, both relationships appear to vary across price levels, suggesting that the effect of service offerings may depend on the restaurant's price category. 
+Taken together, the exploratory analysis suggests that delivery-related and dine-in-related services are associated with restaurant ratings in different ways. Delivery-related services show a slight negative association, while dine-in services show a clearer positive association. In addition, both relationships appear to vary across price levels, suggesting that the effect of service offerings may depend on the restaurant's price category.
