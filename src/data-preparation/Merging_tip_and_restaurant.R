@@ -6,7 +6,7 @@ library(readr)
 
 dir.create(here("gen", "temp"), recursive = TRUE, showWarnings = FALSE)
 
-dataset_restaurants <- read_csv(here("gen", "temp", "dataset_restaurants.csv"))
+dataset_restaurants <- read_csv(here("data", "restaurants_clean.csv"))
 tips <- read_csv(here("data", "tips.csv"))
 
 setDT(dataset_restaurants)
