@@ -1,7 +1,7 @@
 library(tidyverse)
 
 #input
-dataset_restaurants <- read_csv("data/restaurants_clean.csv")
+dataset_restaurants <- read_csv(here("data/restaurants_clean.csv"))
 
 #Extract Tru/false attributes
 dataset_restaurants <- dataset_restaurants %>%
@@ -71,4 +71,4 @@ dataset_restaurants <- dataset_restaurants %>%
   )
 
 #output
-write_csv(dataset_restaurants, "data/restaurants_attributes_extracted.csv")
+write_csv(dataset_restaurants, here("data", "restaurants_attributes_extracted.csv"))
