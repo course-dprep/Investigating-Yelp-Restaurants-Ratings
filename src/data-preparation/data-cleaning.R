@@ -14,5 +14,6 @@ dataset_restaurants <- Dataset_raw %>%
 dataset_restaurants <- dataset_restaurants %>% filter(str_detect(attributes, "RestaurantsPriceRange2"))
 
 #output
-write_csv(dataset_restaurants, "data/restaurants_clean.csv")
+dir.create("gen/temp", recursive = TRUE, showWarnings = FALSE)
+write_csv(dataset_restaurants, "gen/temp/restaurants_attributes_extracted.csv")
 

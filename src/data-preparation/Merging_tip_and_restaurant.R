@@ -27,7 +27,7 @@ restaurants_merged <- merge(
 
 
 restaurants_merged[is.na(tip_compliment_count), tip_compliment_count := 0]
-fwrite(restaurants_merged, here("gen", "temp", "restaurants_merged.csv"))
+fwrite(restaurants_merged, here("data", "restaurants_merged.csv"))
 #Summary statistics of compliment counts
 
 summary(restaurants_merged$tip_compliment_count)
