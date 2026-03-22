@@ -1,4 +1,12 @@
-#Introduction 
+---
+title: "Results Section of The Impact of Delivery and Dine-In Services on Yelp Restaurant Ratings"
+author: "Simona Hu and Sophie Leijten"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+# Introduction 
 In the restaurant industry, online reviews play an increasingly important role in consumer decision-making. Yelp is a platform that provides highly visible indicators of restaurant quality through star ratings and written reviews. These ratings influence customer choices and can significantly affect a restaurant’s reputation and performance.
 
 Restaurants differ in the way they design and deliver their services. Some restaurants focus on convenient delivery and takeaway options, while others invest in the dine-in experience through table service, reservations, outdoor seating, or group-friendly facilities. These strategic service choices may shape how customers evaluate their experience and, ultimately, how they rate the restaurant online.
@@ -13,13 +21,19 @@ This study addresses the following research question:
 What effects do delivery options and dine-in experience have on the star rating of a restaurant, and how does the price range of the restaurant moderate these relationships?
 
 # Data
-This study uses data from the Yelp Dataset. Specifically, we use the users dataset and the tips dataset. The raw dataset (`users.csv`) was first filtered to retain only observations corresponding to restaurants. This was done by identifying entries in the `categories` variable that contain the term “Restaurants”. Additionally, observations without a recorded price range (`RestaurantsPriceRange2`) were removed to ensure consistency in subsequent analyses.
-Next, relevant attributes were extracted from the semi-structured `attributes` column using regular expressions. These attributes include service-related characteristics such as delivery, takeout, reservations, and table service (see table below for the full list and operationalisation). The extracted variables were grouped conceptually into delivery-related features (e.g., delivery, takeout, drive-thru) and dine-in features (e.g., reservations, outdoor seating, table service).
+This study uses data from the Yelp Dataset. Specifically, two datasets were used for this project: the Yelp user dataset and the Yelp tip dataset. First, the raw dataset (`users.csv`) was filtered to retain only observations corresponding to restaurants. This was done by selecting observations where the `categories `variable contained the term “Restaurants”. In addition, observations without a recorded price range (`RestaurantsPriceRange2`) were removed to ensure consistency in subsequent analyses. 
 
-To facilitate quantitative analysis, boolean attributes originally stored as `"True"` and `"False"` were converted into numeric indicators (1 and 0). The `price_range` variable was extracted and converted to a numeric format. The `Alcohol` attribute was also cleaned and recoded into categorical levels (`none`, `beer_and_wine`, and `full_bar`).
+Next, relevant service-related attributes were extracted from the semi-structured attributes column. These include characteristics such as delivery, takeout, reservations, table service, outdoor seating, and alcohol availability. Based on their conceptual similarity, these attributes were grouped into two categories:
+• Delivery/Takeout features: RestaurantsDelivery, RestaurantsTakeOut, Caters, and DriveThru.
+• Dine-in experience features: RestaurantsReservations, RestaurantTableService, GoodForGroups, Alcohol, HappyHour, OutdoorSeating, GoodForKids. 
+
+To facilitate quantitative analysis, boolean attributes originally stored as `"True"` and `"False"` were converted into numeric indicators (1 and 0). The `price_range` variable was extracted and converted to a numeric format ranging from 1 (low-priced) to 4 (high-priced). The alcohol attribute was cleaned and recoded into three categories: none, beer and wine, and full bar.
+
 Observations with missing values for `price_range` were removed during the cleaning process. Before merging the datasets, missing values in aggregated variables such as tip compliment counts were replaced with zero to reflect the absence of recorded compliments rather than missing information.
-To capture the extent of service offerings, two composite variables were constructed. The `delivery_score` represents the sum of delivery-related services, while the `dinein_score` represents the sum of dine-in related services. These variables provide a concise measure of how many services each restaurant offers in each category.
-Finally, the cleaned restaurant dataset was merged with the tips dataset using `business_id` as a key. Tip-level data was aggregated to the restaurant level by summing the `compliment_count` variable. The resulting datasets were saved at different stages of the pipeline, including `restaurants_clean.csv`, `restaurants_attributes_extracted.csv`, and `restaurants_merged.csv`.
+
+To summarize the extent of service offerings, two composite measures were constructed. The delivery_score represents the total number of delivery-related services offered by a restaurant, while the dinein_score captures the number of dine-in related services. These variables provide a concise measure of how many services each restaurant offers in each category. 
+
+Finally, the cleaned restaurant dataset was merged with the Yelp tips dataset using business_id as the matching key. Tip-level data was aggregated to the restaurant level by summing the `compliment_count` variable. The resulting merged dataset was used for the regression analyses presented in this report. 
 
 # Method 
 We will use multiple linear regression (multilinear regression) with the restaurant’s star rating as the dependent variable. Our key predictors represent two attribute clusters:
@@ -29,29 +43,66 @@ Dine-in experience cluster (e.g., RestaurantsReservations, RestaurantTableServic
 
 The most effective method for our investigation is multiple linear regression since it permits us to estimate the independent effects of multiple restaurant features all at once. This is particularly relevant in our situation since we want to separate the distinctive relationships between delivery and dine-in characteristics and star ratings rather than analyze them separately, even though they might be correlated. Regression helps us separate overlapping factors and estimate the distinctive relationship between each attribute cluster with ratings while holding other features constant. The regression framework's ability to let us test our moderator idea directly is one of its main benefits. We may assess whether the significance of these service selections differs across price ranges by adding interaction terms between the price range and the delivery/dine-in variables. Our research question, which specifically questions whether the impact of service characteristics varies based on price level, is directly addressed by this approach.
 
-# Analysis 
-# Moderation analysis: delivery score and price range 
-To examine whether price range moderates the relationship between delivery-related services and restaurant star ratings, we estimated a linear regression model including an interaction term between delivery_score and price_range. 
+# Results
 
-The main effect of delivery_score was negative and statistically significant (B = -0.316, p < .001), indicating that, for restaurants in the lowest price category, offering more delivery-related services is associated with lower average star ratings. The main effect of price_range was also significant (B = -0.066, p < .001), suggesting that higher-priced restaurants tend to receive slightly lower ratings when delivery services are held constant.
+```{r, echo=FALSE}
+source("Analysis.R")
+```
 
-Most importantly, the interaction between delivery_score and price_range was positive and statistically significant (B = 0.168, p < .001). This indicates that price range moderates the relationship between delivery services and star ratings. Specifically, the negative association between delivery services and ratings becomes weaker as price range increases. For higher-priced restaurants, the relationship may even turn positive.
+Star ratings in the dataset are relatively centered around mid-to-high numbers, showing that most restaurants receive relatively favorable ratings. Delivery and dine-in scores vary across restaurants, reflecting differences in service offerings.
 
-Although the interaction effect is statistically strong, the overall explanatory power of the model remains modest (R² = 0.047). This suggests that while delivery services and price range interact in meaningful ways, they explain only a limited proportion of the variation in restaurant ratings.
+## Effect of delivery options on star ratings
 
-Graphical inspection of the interaction confirms this pattern: for lower-priced restaurants, increased delivery-related services are associated with lower customer ratings. In contrast, for higher-priced restaurants, delivery services are associated with more favorable evaluations.
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics(here("gen", "figures", "fig5_delivery_stars.png"))
+```
 
-These findings suggest that the strategic value of delivery services depends on the restaurant’s price positioning. Delivery options may be perceived differently by consumers depending on whether a restaurant operates in a lower or higher price segment.
-
-# Moderation analysis: dine-in score and price range
-To test whether price range also moderates the relationship between dine-in services and star ratings, a second interaction model was estimated including dinein_score, price_range, and their interaction term.
-
-The main effect of dinein_score was positive and statistically significant (B = 0.206, p < .001), indicating that restaurants offering more dine-in related services tend to receive higher customer ratings. The main effect of price_range was also positive in this model (B = 0.369, p < .001), reflecting systematic differences in ratings across price categories when dine-in services are taken into account.
-
-The interaction between dinein_score and price_range was negative and statistically significant (B = -0.078, p < .001). This indicates that the positive association between dine-in services and star ratings becomes weaker as price range increases.
-
-In practical terms, dine-in services appear to be particularly important for lower-priced restaurants. For these establishments, offering additional dine-in features is associated with substantial increases in customer ratings. However, for higher-priced restaurants, the incremental benefit of additional dine-in services diminishes and may approach zero.
+This figure depicts the relationship between delivery score and star ratings. The estimated regression line shows a modest negative relationship, implying that restaurants offering more delivery-related services are more likely to have slightly worse customer ratings. However, the effect size appears small. Delivery-related services have only a weak correlation with customer ratings, as shown by the small projected difference in star rating even across the whole delivery score range. Although the effect's practical significance is constrained, this pattern is in line with the regression results, which demonstrate a statistically significant negative relationship between the delivery score and star rating.additional dine-in features is associated with substantial increases in customer ratings. However, for higher-priced restaurants, the incremental benefit of additional dine-in services diminishes and may approach zero.
 
 The model including the interaction explains approximately 4.8% of the variance in star ratings (R² = 0.048), representing an improvement over the simple main-effects model. Nevertheless, the relatively low R² values indicate that many other factors beyond service configurations and price range contribute to customer evaluations.
 
+## Moderating role of price range in the delivery options
 
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics(here("gen", "figures", "fig7_delivery_mod.png"))
+```
+
+The moderating effect of price range on the relationship between delivery score and star ratings is demonstrated in this figure. The negative slope indicates that an increase in delivery-related services is associated with reduced customer ratings for lower priced restaurants. This connection becomes weaker and more beneficial as the price range increases. Overall, the association between delivery services and star ratings improves for higher price categories. However, this pattern isn't quite consistent across all higher price points. Price range 3 exhibits a slightly more positive correlation, while the highest price category looks flatter, indicating that the influence diminishes rather than keep growing. While the overall interaction pattern is still consistent with the regression results, this suggests some variation within higher price groups.
+
+## Effect of dine-in experience on star ratings
+
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics(here("gen", "figures", "fig6_dinein_stars.png"))
+```
+
+This figure shows the relationship between dine-in score and star ratings. The fitted regression line demonstrates a positive relationship, hence suggesting that restaurants offering more dine-in related services tend to receive higher customer ratings. The slope looks steeper compared to the figure reported for delivery score, implying that dine-in experience has a stronger association with customer ratings in this dataset. This pattern is consistent with the regression results hence showing a statistically significant positive association between dine-in score and star rating.
+
+## Moderating role of price range in the dine-in experience
+
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics(here("gen", "figures", "fig8_dinein_mod.png"))
+```
+
+This figure demonstrates the moderating role of price range on the relationship between dine-in score and star ratings. Customer ratings and dine-in scores are strongly correlated across all price points. However, this relationship's strength varies depending on the price range. For lower-priced restaurants, increases in dine-in options are associated with relatively larger increases in star ratings, as shown by the steeper slope. Meanwhile, for higher-priced restaurants, the relationship appears weaker, with flatter slopes, suggesting that additional dine-in options have a smaller impact on star ratings. Expensive restaurants typically have higher ratings, but their ratings don't increase as much when they add more dine-in services. This is consistent with the regression results, which indicate that dine-in has less of an impact at higher price levels.
+
+# Conclusion
+
+This study examined how delivery-related services and dine-in experience features are associated with Yelp restaurant star ratings, and whether these relationships differ across price levels. Using multiple linear regression models with interaction terms, we analyzed the independent effects of both service clusters while accounting for price range as a moderating variable.
+
+The results show that delivery-related services are negatively associated with star ratings in lower-priced restaurants. However, this relationship is moderated by price range: as price level increases, the negative association becomes weaker and may become more favourable for higher-priced establishments. This suggests that the perceived value of delivery services depends on the restaurant’s market positioning.
+
+In contrast, dine-in experience features are positively associated with star ratings overall. Restaurants offering more dine-in related services tend to receive higher customer evaluations. However, this positive relationship remains positive across price ranges, but the strength of this relationship decreases as the price increases. For lower-priced restaurants, improvements in dine-in services are associated with larger increases in ratings, whereas for higher-priced restaurants, additional dine-in features appear to have a smaller marginal impact.
+
+While the moderation effects are statistically significant, the overall explanatory power of the models is modest, indicating that many additional factors influence customer evaluations.
+
+# Managerial implications 
+
+The results suggest that service strategies should align with price positioning. Lower-priced restaurants may benefit more from strengthening their dine-in experience than from expanding delivery options. For higher-priced restaurants, delivery services appear to be less negatively associated with ratings and may become more favourable at higher price levels. 
+
+Managers should therefore avoid a one-size-fits-all strategy and instead consider how service offerings interact with customer expectations within their price segment.
+
+# Limitations and Future Research
+
+This study examines associations rather than causal effects. Therefore, we cannot conclude that adding or removing specific services will directly change a restaurant’s star rating. In addition, the relatively low R² values show that a large part of the variation in Yelp ratings is explained by factors not included in our model. Elements such as food quality, service interactions, reputation, and other contextual factors likely play an important role.
+
+Another limitation is that service characteristics were measured as simple binary indicators (0 or 1). This approach does not capture differences in the quality or intensity of these services. Future research could include additional variables, such as review text sentiment, cuisine type, or location characteristics, to gain a more complete understanding of what drives customer ratings.
