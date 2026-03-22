@@ -132,3 +132,4 @@ The generated reports can be found in the reporting/ directory:
 Team 3,
 * Maud Dreuning, e-mail: m.dreuning@tilburguniversity.edu
 * Sophie Leijten, e-mail: s.r.leijten@tilburguniversity.edu
+* Simona Hu, e-mail: s.hu_2@tilburguniversity.edu
